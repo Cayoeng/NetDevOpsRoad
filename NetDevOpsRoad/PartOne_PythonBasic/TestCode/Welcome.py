@@ -28,7 +28,7 @@ def get_valid_name(prompt):
 
 
 # Prompt the user for input with validation
-name = get_valid_name("Please enter your name: ")
+name = get_valid_name("Please enter your GIVEN name: ")
 gender = get_valid_gender("Please enter your gender (male, female, other): ")
 age = get_valid_age("Please enter your age: ")
 
