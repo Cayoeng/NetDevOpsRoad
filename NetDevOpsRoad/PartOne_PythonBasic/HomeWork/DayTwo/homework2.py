@@ -10,4 +10,3 @@ print(f'{"Interface Name":<20}: {re_result[0]:<20}\n'
       f'{"IP Address":<20}: {re_result[1]:<20}\n'
       f'{"Status":<20}: {re_result[2]:<20}'
       )
-
