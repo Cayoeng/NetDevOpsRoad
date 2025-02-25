@@ -8,7 +8,7 @@ firewall_session_pattern = re.compile(r'(\S+)\s+'                               
                                       r'flag\s\S+')              #flags
 str = 'TCP server 172.16.1.101:443 localserver 172.16.66.1:53710, idle 0:01:09, bytes 27575949, flags UIO'
 
-re_result = re.match(firewall_session_pattern, str).groups()
+re_result = re.match(firewall_session_pattern, str)
 print(str)
 print('-'*len(str))
 print(re_result)
