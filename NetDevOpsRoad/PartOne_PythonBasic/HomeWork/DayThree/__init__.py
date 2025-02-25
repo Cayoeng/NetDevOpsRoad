@@ -1,13 +1,23 @@
-import ipaddress
 
-subNet1 = ipaddress.ip_network('192.168.1.0/24')
+import re
 
-for ipAddr in subNet1:
-    print(f'{ipAddr}/24')
-ip1 = ipaddress.ip_address('192.168.1.100')
+firewall_session_pattern = re.compile(r'(TCP|UDP)\s+'                                                               #protocol
+                                      r'server\s+(\d{1,3}(?:\.\d{1,3}){3}:\d{1,5})\s+'             #server
+                                      r'localserver\s+(\d{1,3}(?:\.\d{1,3}){3}:\d{1,5}),\s+'     #localserver
+                                      r'idle\s+(\d+:\d+:\d+),\s'                                                 #idle
+                                      r'bytes\s+(\d+),\s+'                                                              #bytes
+                                      r'flags\s+(\S+)'
+                                      )                                                                #flags
 
-print('-'*20)
-print(f'{ip1} is in {subNet1}: True or False')
-print(ip1 in subNet1)
-print('-'*20)
-print(subNet1)
+#str = 'TCP server 172.16.1.101:443 localserver 172.16.66.1:53710, idle 0:01:09, bytes 27575949, flags UIO'
+str = 'TCP server 172.16.1.101:443 localserver 172.16.66.1:53710, idle 0:01:09, bytes 27575949, flags UIO'
+
+print(str)
+print('-'*len(str))
+
+re_result = re.match(firewall_session_pattern, str)
+if re_result:
+    print(re_result.groups())
+else:
+    print('Not Match')
+print('-'*len(str))
