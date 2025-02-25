@@ -46,4 +46,4 @@ if __name__ == "__main__":
     print(f"Name   : {name}")
     print(f"Gender : {gender}")
     print(f"Age    : {age}")
-    print("\nHello, {name}! You are a {gender} and {age} years old. Nice to meet you!")
+    print(f"\nHello, {name}! You are a {gender} and {age} years old. Nice to meet you!")
