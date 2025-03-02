@@ -20,5 +20,5 @@ def insert_new_asa_log_line(log_line):
     print("Data inserted successfully.")
 
 if __name__ == "__main__":
-    new_line = "TCP Student 192.168.189.166:32806 Teacher 137.78.5.128:65247, idle 0:00:00, bytes 1024, flags UIO"
+    new_line = "TCP Student 192.168.189.100:32806 Teacher 137.78.5.128:65100, idle 0:00:00, bytes 512, flags UIO"
     insert_new_asa_log_line(new_line)
