@@ -12,4 +12,4 @@ while True:
         break
     else:
         print("等待1秒后重新开始监控！")
-        time.sleep(3)
+        time.sleep(1)
