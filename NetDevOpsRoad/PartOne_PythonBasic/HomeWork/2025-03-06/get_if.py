@@ -14,7 +14,7 @@ def qytang_get_if(*ips, username='admin', password='Cisc0123'):
         # print('='*32)
 
         if_dict = {}
-        for str in interface_info.split('\n '):
+        for str in interface_info.split('\n'):
             re_result = re.match(r'(GigabitEthernet\d+)\s+(\d{1,3}(?:\.\d{1,3}){3})',str).groups()
             if_dict[re_result[0]] = re_result[1]
 
