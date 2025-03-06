@@ -13,6 +13,9 @@ def qytang_get_if(*ips, username='admin', password='Cisc0123'):
         # print(interface_info)
         # print('='*32)
 
+        if not interface_info:
+            continue
+
         if_dict = {}
 
         for str in interface_info.split('\n'):
