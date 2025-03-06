@@ -14,8 +14,6 @@ def qytang_ping(ip):
     ping_pkt = kamene.layers.inet.IP(dst=ip) / ICMP()
     ping_result = sr1(ping_pkt, timeout=1, verbose=False)
 
-    print(ping_result)
-
     if ping_result and ping_result.type == 0:
         return True
     else:

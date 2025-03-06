@@ -10,7 +10,3 @@ def qytang_ssh(ip, username, password, port=22, cmd='ls'):
         return x
     except Exception as e:
         print(f'Fail to connect {ip}!{e}')
-
-if __name__ == '__main__':
-    print(qytang_ssh('192.168.64.16', 'root', 'B1216.123'))
-    print(qytang_ssh('192.168.64.16', 'root', 'B1216.123', cmd='pwd'))
