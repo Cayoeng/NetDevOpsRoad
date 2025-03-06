@@ -31,4 +31,4 @@ hosts = ping_subnet(subnet)
 
 print(f'\nThere are {len(hosts)} available hosts in subnet {subnet}: \n{hosts}\n')
 print('Now try to get interface information of all hosts except gateway: ')
-pprint.pprint(qytang_get_if(*hosts))
+pprint.pprint(qytang_get_if(*hosts),indent=4)
