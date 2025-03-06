@@ -1,7 +1,3 @@
-from re import match
-
-from setuptools.discovery import remove_stubs
-
 from ping import ping_subnet
 from ssh import qytang_ssh
 
