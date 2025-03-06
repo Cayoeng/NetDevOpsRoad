@@ -7,7 +7,7 @@ import pprint
 def qytang_get_if(*ips, username='admin', password='Cisc0123'):
     device_if_dict = {}
     for ip in ips:
-        if ip == ip.split('.')[0] + '.1':
+        if ip == '.'.join(ip.split('.')[0:3]) + '.1':
             continue
         interface_info = qytang_ssh(ip, username, password, cmd='show ip int brief')
         # print(interface_info)
