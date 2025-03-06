@@ -7,16 +7,18 @@ import pprint
 def qytang_get_if(*ips, username='admin', password='Cisc0123'):
     device_if_dict = {}
     for ip in ips:
-       interface_info = qytang_ssh(ip, username, password, cmd='show ip int brief')
-       print(interface_info)
-       print('='*32)
-        # for conn in asa_conn.split('\n '):
-        #     re_result = re.match(
-        #         r'TCP \S+ (\d{1,3}(?:\.\d{1,3}){3}):(\d{1,5}) \S+ (\d{1,3}(?:\.\d{1,3}){3}):(\d{1,5}), idle \d+:\d+:\d+, bytes (\d+), flags (\S+)',
-        #         conn).groups()
-        #     asa_dict[re_result[0], re_result[1], re_result[2], re_result[3]] = (re_result[4], re_result[5])
+        if ip != '192.168.64.1':
+            continue
+        interface_info = qytang_ssh(ip, username, password, cmd='show ip int brief')
+        # print(interface_info)
+        # print('='*32)
 
-    device_if_dict[ip] = interface_info
+        if_dict = {}
+        for str in interface_info.split('\n '):
+            re_result = re.match(r'(GigabitEthernet\d+)\s+(\d{1,3}(?:\.\d{1,3}){3})',str).groups()
+            if_dict[re_result[0]] = re_result[1]
+
+        device_if_dict[ip] = if_dict
 
     return device_if_dict
 
