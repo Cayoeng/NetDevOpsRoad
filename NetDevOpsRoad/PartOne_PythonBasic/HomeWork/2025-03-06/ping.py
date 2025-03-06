@@ -34,7 +34,6 @@ def qytang_ping(ip):
 def ping_subnet(network):
     """使用多线程对给定子网的所有主机进行Ping测试，并返回可达的IP列表"""
     net = ipaddress.ip_network(network)
-    print(f"nethosts are: \n{net.hosts()}")
 
     reachable_ips = []
 
