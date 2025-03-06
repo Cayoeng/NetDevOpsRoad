@@ -32,13 +32,13 @@ def qytang_ping(ip):
 #         if qytang_ping(str(ip)):
 #             reachable_hosts.append(str(ip))
 #     return reachable_hosts
-
+#
 #多线程
 def ping_subnet(network):
     """使用多线程对给定子网的所有主机进行Ping测试，并返回可达的IP列表"""
     net = ipaddress.ip_network(network)
 
-    reachable_ips = []
+    reachable_hosts = []
 
     with ThreadPoolExecutor(max_workers=8) as executor:
         # 建立一个字典：Future对象对应要Ping的IP
@@ -52,9 +52,9 @@ def ping_subnet(network):
             try:
                 # 如果结果为 True，说明Ping通
                 if future.result():
-                    reachable_ips.append(ip)
+                    reachable_hosts.append(ip)
             except Exception as e:
                 # 这里可以处理异常日志等
                 pass
 
-    return reachable_ips
+    return reachable_hosts
