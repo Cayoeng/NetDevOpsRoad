@@ -1,7 +1,6 @@
 import logging
 logging.getLogger("kamene.runtime").setLevel(logging.ERROR)
 
-import kamene.layers.inet
 from kamene.all import *
 from kamene.layers.inet import IP, ICMP
 
