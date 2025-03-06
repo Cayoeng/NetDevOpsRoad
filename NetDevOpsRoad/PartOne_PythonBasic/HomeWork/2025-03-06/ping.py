@@ -16,7 +16,7 @@ def qytang_ping(ip):
     return True if ping_result and ping_result.type == 0 else False
 
 
-def multi_ping_ips(ips,max_workers=32):
+def multi_ping_ips(ips,max_workers=8):
     """
     对给定的一批IP地址使用多线程并发Ping，返回 {ip: Bool} 的字典：
         - True 表示 ICMP Reply 收到
@@ -38,7 +38,7 @@ def multi_ping_ips(ips,max_workers=32):
     return results
 
 
-def ping_subnet(network, max_workers=32):
+def ping_subnet(network, max_workers=8):
     """
     对网段 network 中的所有主机地址进行并发Ping，
     返回一个仅包含可达IP的列表
