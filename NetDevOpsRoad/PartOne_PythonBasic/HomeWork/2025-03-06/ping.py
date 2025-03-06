@@ -45,7 +45,13 @@ def ping_subnet(network, max_workers=32):
     """
     net = ipaddress.ip_network(network)
     ip_list = [str(ip) for ip in net.hosts()]
+
+    print(ip_list)
+
     ping_dict = multi_ping_ips(ip_list, max_workers)
+
+    print('-'*50)
+    print(ping_dict)
 
     reachable_hosts = [ip for ip, reachable in ping_dict.items() if reachable]
     return reachable_hosts
