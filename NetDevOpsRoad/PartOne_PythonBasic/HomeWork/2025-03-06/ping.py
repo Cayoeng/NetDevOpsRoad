@@ -12,7 +12,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 
 def qytang_ping(ip):
     ping_pkt = kamene.layers.inet.IP(dst=ip) / ICMP()
-    ping_result = sr1(ping_pkt, timeout=2, verbose=False)
+    ping_result = sr1(ping_pkt, timeout=1, verbose=False)
     if ping_result:
         return True
     else:
@@ -34,6 +34,8 @@ def qytang_ping(ip):
 def ping_subnet(network):
     """使用多线程对给定子网的所有主机进行Ping测试，并返回可达的IP列表"""
     net = ipaddress.ip_network(network)
+    print(f"nethosts are: \n{net.hosts()}")
+
     reachable_ips = []
 
     with ThreadPoolExecutor(max_workers=32) as executor:
