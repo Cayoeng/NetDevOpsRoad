@@ -1,7 +1,4 @@
 import logging
-
-from PartOne_PythonBasic.HomeWork.DayThree import firewall_session_pattern
-
 logging.getLogger("kamene.runtime").setLevel(logging.ERROR)
 
 import kamene.layers.inet
