@@ -37,7 +37,7 @@ def ping_subnet(network):
 
     reachable_ips = []
 
-    with ThreadPoolExecutor(max_workers=32) as executor:
+    with ThreadPoolExecutor(max_workers=8) as executor:
         # 建立一个字典：Future对象对应要Ping的IP
         future_to_ip = {
             executor.submit(qytang_ping, str(ip)): str(ip)
