@@ -25,7 +25,7 @@ def qytang_get_if(*ips, username='admin', password='Cisc0123'):
     return device_if_dict
 
 
-subnet = input('Please SUBNET you want to ping: ')
+subnet = input('Please input SUBNET you want to ping: ')
 
 hosts = ping_subnet(subnet)
 
