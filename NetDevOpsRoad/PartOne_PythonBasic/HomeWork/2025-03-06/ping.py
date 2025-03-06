@@ -1,4 +1,7 @@
 import logging
+
+from PartOne_PythonBasic.HomeWork.DayThree import firewall_session_pattern
+
 logging.getLogger("kamene.runtime").setLevel(logging.ERROR)
 
 import kamene.layers.inet
@@ -6,53 +9,60 @@ from kamene.all import *
 from kamene.layers.inet import IP, ICMP
 
 import ipaddress
-
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 
 def qytang_ping(ip):
-    ping_pkt = kamene.layers.inet.IP(dst=ip) / ICMP()
+    # 单个IP的Ping测试，成功返回True，失败返回False
+    ping_pkt = IP(dst=ip) / ICMP()
     ping_result = sr1(ping_pkt, timeout=1, verbose=False)
+    return True if ping_result and ping_result.type == 0 else False
 
-    if ping_result and ping_result.type == 0:
-        return True
-    else:
-        return False
 
-# 单线程
-# def ping_subnet(network):
-#     # 使用ipaddress模块解析子网
-#     net = ipaddress.ip_network(network)
-#     reachable_hosts = []
-#     # 对子网内所有主机地址循环测试
-#     for ip in net.hosts():
-#         # 调用已有qytang_ping函数构建ICMP报文
-#         if qytang_ping(str(ip)):
-#             reachable_hosts.append(str(ip))
-#     return reachable_hosts
-#
-#多线程
-def ping_subnet(network):
-    """使用多线程对给定子网的所有主机进行Ping测试，并返回可达的IP列表"""
-    net = ipaddress.ip_network(network)
-
-    reachable_hosts = []
-
-    with ThreadPoolExecutor(max_workers=8) as executor:
-        # 建立一个字典：Future对象对应要Ping的IP
+def multi_ping_ips(ips,max_workers=32):
+    """
+    对给定的一批IP地址使用多线程并发Ping，返回 {ip: Bool} 的字典：
+        - True 表示 ICMP Reply 收到
+        - False 表示 Ping 不通
+    """
+    results = {}
+    with ThreadPoolExecutor(max_workers=max_workers) as executor:
+        # future_to_ip 映射每个线程任务到其对应的IP
         future_to_ip = {
-            executor.submit(qytang_ping, str(ip)): str(ip)
-            for ip in net.hosts()
+            executor.submit(qytang_ping, ip): ip
+            for ip in ips
         }
-
         for future in as_completed(future_to_ip):
             ip = future_to_ip[future]
             try:
-                # 如果结果为 True，说明Ping通
-                if future.result():
-                    reachable_hosts.append(ip)
-            except Exception as e:
-                # 这里可以处理异常日志等
-                pass
+                results[ip] = future.result()
+            except Exception:
+                results[ip] = False
+    return results
 
+
+def ping_subnet(network, max_workers=32):
+    """
+    对网段 network 中的所有主机地址进行并发Ping，
+    返回一个仅包含可达IP的列表
+    """
+    net = ipaddress.ip_network(network)
+    ip_list = [str(ip) for ip in net.hosts()]
+    ping_dict = multi_ping_ips(ip_list, max_workers)
+
+    reachable_hosts = [ip for ip, reachable in ping_dict.items() if reachable]
     return reachable_hosts
+
+
+if __name__ == "__main__":
+    # 示例：多线程批量Ping一组IP
+    test_ips = ["192.168.64.101", "8.8.8.8"]
+    results = multi_ping_ips(test_ips)
+    print("Ping 测试结果：")
+    for ip, status in results.items():
+        print(f"  {ip}: {status}")
+
+    # 示例：对网段 192.168.64.0/24 进行扫描并返回连通的 IP
+    reachable = ping_subnet("192.168.64.0/24")
+    print(f"\n子网扫描可达IP: {reachable}")
+
