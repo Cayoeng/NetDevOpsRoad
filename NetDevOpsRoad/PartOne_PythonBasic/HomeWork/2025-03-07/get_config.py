@@ -20,7 +20,7 @@ def qytang_check_diff(ip):
         time.sleep(5)
         running_config = qytang_get_config(ip)
         trim_config = re.match(r'(^hostname[\s\S]*?end$)', '', running_config)
-        current_md5 = trim_config.__hash__()
+        current_md5 = hashlib.md5(trim_config.group(0).encode('utf-8')).hexdigest()
         if current_md5 != before_md5:
             before_md5 = current_md5
             return print(f'\nConfig has been changed on {ip}!')
