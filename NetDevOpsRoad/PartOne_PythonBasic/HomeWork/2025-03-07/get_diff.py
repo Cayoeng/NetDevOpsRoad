@@ -24,11 +24,14 @@ def qytang_check_diff(ip):
 
         current_md5 = hashlib.md5(trim_config.group(0).encode('utf-8')).hexdigest()
 
-        if current_md5 != before_md5:
+        if before_md5 == '':
             before_md5 = current_md5
-            print(f'\nConfig has been changed on {ip}!')
+            print(current_md5)
+        elif current_md5 == before_md5:
+            print(current_md5)
         else:
-            print(before_md5)
+            print(current_md5)
+            break
 
 
 if __name__ == '__main__':
