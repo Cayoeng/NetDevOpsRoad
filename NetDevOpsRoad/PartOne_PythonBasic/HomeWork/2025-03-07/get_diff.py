@@ -25,9 +25,9 @@ def qytang_check_diff(ip):
 
         if current_md5 != before_md5:
             before_md5 = current_md5
-            return print(f'\nConfig has been changed on {ip}!')
+            print(f'\nConfig has been changed on {ip}!')
         else:
-            return before_md5
+            print(before_md5)
 
 
 if __name__ == '__main__':
