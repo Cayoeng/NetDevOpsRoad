@@ -18,8 +18,8 @@ def qytang_check_diff(ip):
     before_md5 = ''
     while True:
         time.sleep(5)
-
-        trim_config = re.match('^hostname', qytang_get_config(ip), re.DOTALL)
+        print(qytang_get_config())
+        trim_config = re.findall('^hostname', qytang_get_config(ip), re.DOTALL)
         print(trim_config)
         current_md5 = hashlib.md5(trim_config[0].encode('utf-8')).hexdigest()
         print(current_md5)
